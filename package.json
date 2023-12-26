@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "start-storybook -p 6006",
     "build": "babel src --out-dir lib --extensions '.ts,.tsx'",
-    "bump-version": "node bumpVersion.js",
+    "reversion": "node ./scripts/reversion.js",
     "start-verdaccio": "verdaccio",
     "publish-package": "npm publish --registry http://localhost:4873",
-    "watch-publish": "chokidar 'src/**/*' -c 'npm run bump-version && npm run publish-package'",
+    "watch-publish": "chokidar 'src/**/*' -c 'npm run reversion && npm run publish-package'",
     "start": "npm-run-all --parallel start-verdaccio watch-publish",
     "build-storybook": "build-storybook",
     "storybook-generate": "sb-rn-get-stories --config-path .ondevice",
