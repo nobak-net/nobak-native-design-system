@@ -1,30 +1,49 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import texts from "../../base/texts";
-import colors from "../../base/colors";
+import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import texts from "../../styles/texts";
+import colors from "../../styles/colors";
+import { Icon, IconKeys } from '../Icon/Icon'; // Import the Icon component
 
 interface ButtonProps {
   onPress: () => void;
-  text: string;
-  isLoadig: boolean;
-  buttonStyle: ButtonStyleProps
+  text?: string;
+  isLoading?: boolean;
+  buttonStyle: ButtonStyleProps;
+  icon?: IconKeys;
+  type?: 'text' | 'iconText' | 'icon';
 }
 
 interface ButtonStyleProps {
-  variant?: "primary" | "secondary";
-  size?: "tiny" | "small" | "medium" | "large";
+  variant: "primary" | "secondary";
+  size: "tiny" | "small" | "medium" | "large";
 }
 
-// Function
-export const Button = ({ onPress, text, buttonStyle }: ButtonProps) => {
+export const Button = ({ onPress, text, icon = 'Analytics', buttonStyle = { variant: 'primary', size: 'medium' }, type = 'text' }: ButtonProps) => {
   const style = getStyle(buttonStyle);
+
+  const renderContent = () => {
+    switch (type) {
+      case 'iconText':
+        return (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />}
+            {text && <Text style={style.text}>{text}</Text>}
+          </View>
+        );
+      case 'icon':
+        return icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />;
+      case 'text':
+      default:
+        return text && <Text style={style.text}>{text}</Text>;
+    }
+  };
+
   return (
     <TouchableOpacity style={style.container} onPress={onPress}>
-      <Text style={style.text}>{text}</Text>
+      {renderContent()}
     </TouchableOpacity>
   );
 };
-
 
 // Build Button Style
 const getStyle = ({
