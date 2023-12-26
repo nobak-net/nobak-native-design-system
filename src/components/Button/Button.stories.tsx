@@ -22,4 +22,18 @@ export default ButtonMeta;
 
 type ButtonStory = ComponentStory<typeof Button>;
 
-export const Basic: ButtonStory = (args) => <Button {...args} />;
+const variants = ['primary', 'secondary'];
+const sizes = ['tiny', 'small', 'medium', 'large'];
+
+// Function to create a story for a specific variant and size
+const createButtonStory = (variant: string, size: string): ButtonStory => {
+  return (args) => <Button {...args} buttonStyle={{ variant, size }} />;
+};
+
+// Create stories for each variant and size
+variants.forEach(variant => {
+  sizes.forEach(size => {
+    module.exports[`${variant}_${size}`] = createButtonStory(variant, size);
+  });
+});
+
