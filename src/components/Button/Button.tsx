@@ -7,13 +7,10 @@ interface ButtonProps {
   onPress: () => void;
   text: string;
   isLoadig: boolean;
-  buttonStyle: {
-    variant?: "primary" | "secondary";
-    size?: "tiny" | "small" | "medium" | "large";
-  }
+  buttonStyle: ButtonStyleProps
 }
 
-interface StyleProps {
+interface ButtonStyleProps {
   variant?: "primary" | "secondary";
   size?: "tiny" | "small" | "medium" | "large";
 }
@@ -28,11 +25,12 @@ export const Button = ({ onPress, text, buttonStyle }: ButtonProps) => {
   );
 };
 
+
 // Build Button Style
 const getStyle = ({
   variant = "primary",
   size = "medium",
-}: StyleProps) => {
+}: ButtonStyleProps) => {
   const backgroundColor = variants[variant].background || variants.primary.background;
   const textColor = variants[variant].text || variants.primary.text;
   const strokeColor = variants[variant].stroke || variants.primary.stroke;
@@ -75,8 +73,6 @@ const sizes = {
     borderRadius: 12,
   },
 };
-
-
 
 const textSizes = {
   tiny: { ...texts.buttonTiny },

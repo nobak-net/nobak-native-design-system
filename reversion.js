@@ -1,7 +1,7 @@
 const fs = require('fs');
 const crypto = require('crypto');
 
-const packageJsonPath = '../package.json';
+const packageJsonPath = './package.json';
 const packageJson = require(packageJsonPath);
 
 // Function to generate a short hash
