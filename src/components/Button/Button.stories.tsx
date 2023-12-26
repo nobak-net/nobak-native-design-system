@@ -7,7 +7,7 @@ const ButtonMeta: ComponentMeta<typeof Button> = {
   title: "Button",
   component: Button,
   args: {
-    text: "Hello world",
+    text: "Hello",
   },
   decorators: [
     (Story) => (
