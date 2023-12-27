@@ -1,6 +1,6 @@
 {
   "name": "nobak-native-design-system",
-  "version": "0.0.1-aa4e9b652da4",
+  "version": "0.0.1-226171fe9c10",
   "main": "lib/index",
   "license": "MIT",
   "scripts": {
@@ -81,6 +81,7 @@
   },
   "private": false,
   "dependencies": {
+    "@react-native-picker/picker": "^2.6.1",
     "react-native-svg": "^14.1.0"
   }
 }
