@@ -1,7 +1,9 @@
 const fs = require('fs');
+const path = require('path');
 const crypto = require('crypto');
 
-const packageJsonPath = './package.json';
+// Correctly resolve the path to package.json
+const packageJsonPath = path.join(__dirname, '..', 'package.json');
 const packageJson = require(packageJsonPath);
 
 // Function to generate a short hash
@@ -16,5 +18,6 @@ const newVersion = `${currentVersionParts}-${hash}`;
 
 packageJson.version = newVersion;
 
+// Write the updated package.json back to file
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 console.log(`Version updated to ${newVersion}`);

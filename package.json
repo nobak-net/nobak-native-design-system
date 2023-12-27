@@ -1,12 +1,12 @@
 {
   "name": "nobak-native-design-system",
-  "version": "0.0.1-bffd6ee334d3",
+  "version": "0.0.1-b7eec0b6f134",
   "main": "lib/index",
   "license": "MIT",
   "scripts": {
     "dev": "start-storybook -p 6006",
     "build": "babel src --out-dir lib --extensions '.ts,.tsx'",
-    "reversion": "node reversion.js",
+    "reversion": "node ./scripts/reversion.js",
     "start-verdaccio": "verdaccio",
     "publish-package": "npm publish --registry http://localhost:4873",
     "watch-publish": "chokidar 'src/**/*' -c 'npm run reversion && npm run publish-package'",
@@ -53,7 +53,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.3",
-    "react-native-safe-area-context": "4.6.3",
+    "react-native-safe-area-context": "^4.6.3",
     "react-native-web": "~0.19.6",
     "tsc": "^2.0.4",
     "typescript": "^5.1.3"
