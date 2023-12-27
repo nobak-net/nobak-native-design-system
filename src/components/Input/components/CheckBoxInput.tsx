@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput as RNTextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import colors from '../../../styles/colors';
+import {colors} from '../../../styles';
 type OptionType = {
   name: string;
   value: string;

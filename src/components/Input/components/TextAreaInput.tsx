@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput as RNTextInput, StyleSheet } from 'react-native';
-import colors from '../../../styles/colors';
+import {colors} from '../../../styles';
 
 type TextAreaInputProps = {
     config: {

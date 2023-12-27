@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react-native';
-import SelectInput from './SelectInput'; // Adjust the import path as necessary
+import { SelectInput } from './SelectInput'; 
 
 const SelectInputMeta: ComponentMeta<typeof SelectInput> = {
   title: 'SelectInput',
@@ -9,10 +9,8 @@ const SelectInputMeta: ComponentMeta<typeof SelectInput> = {
 
 export default SelectInputMeta;
 
-// Template for creating stories
 const Template: ComponentStory<typeof SelectInput> = (args) => <SelectInput {...args} />;
 
-// Example Story: Default SelectInput
 export const DefaultSelectInput = Template.bind({});
 DefaultSelectInput.args = {
   config: {
@@ -28,14 +26,3 @@ DefaultSelectInput.args = {
     debug: false,
   },
 };
-
-// Example Story: With Hidden SelectInput
-export const HiddenSelectInput = Template.bind({});
-HiddenSelectInput.args = {
-  config: {
-    ...DefaultSelectInput.args.config,
-    hidden: true,
-  },
-};
-
-// You can create more stories for other scenarios like 'Pre-filled SelectInput', 'Disabled State', etc.

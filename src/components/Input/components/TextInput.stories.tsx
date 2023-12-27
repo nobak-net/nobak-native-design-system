@@ -25,9 +25,9 @@ DefaultTextInput.args = {
     icon: 'pencil', // Replace with your icon name
     type: 'text',
     validation: {
-      fn: async (text) => ({ valid: true, message: '' }),
+      fn: async (text: string) => ({ valid: true, message: '' }),
     },
-    afterChange: (info) => console.log('After change:', info),
+    afterChange: (info: any) => console.log('After change:', info),
   },
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react-native';
-import TextAreaInput from './TextAreaInput'; // Adjust the import path as necessary
+import { TextAreaInput } from './TextAreaInput'; // Adjust the import path as necessary
 
 const TextAreaInputMeta: ComponentMeta<typeof TextAreaInput> = {
   title: 'TextAreaInput',

@@ -1,7 +1,6 @@
 import React, { useState, useCallback, createContext, useContext } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import { Button } from '../../Button'
-
 export type FormContextType = {
     formState: { [key: string]: any };
     setFieldValue: (field: string, value: any) => void;
@@ -39,8 +38,8 @@ export const FormProvider: React.FC<{
         <FormContext.Provider value={{ formState, setFieldValue, handleSubmit }}>
             <View>
                 {children}
-                <View>
-                    <Button text="Submit" onPress={handleSubmit} buttonStyle={{ variant: 'primary', size: 'medium' }} />
+                <View style={{ paddingTop: 12}}>
+                    <Button text="Submit" onPress={handleSubmit} buttonStyle={{ variant: 'primary', size: 'medium', full: false }} />
                 </View>
             </View>
         </FormContext.Provider>

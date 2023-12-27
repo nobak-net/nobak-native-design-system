@@ -1,8 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
-import texts from "../../styles/texts";
-import colors from "../../styles/colors";
-import { Icon, IconKeys } from '../Icon/Icon'; // Import the Icon component
+import { texts, colors } from "../../styles";
+import { Icon, type IconKeys } from '../Icon'; // Import the Icon component
 
 interface ButtonProps {
   onPress: () => void;
@@ -16,6 +15,7 @@ interface ButtonProps {
 interface ButtonStyleProps {
   variant: "primary" | "secondary";
   size: "tiny" | "small" | "medium" | "large";
+  full?: boolean
 }
 
 export const Button = ({ onPress, text, icon = 'Analytics', buttonStyle = { variant: 'primary', size: 'medium' }, type = 'text' }: ButtonProps) => {
@@ -49,6 +49,7 @@ export const Button = ({ onPress, text, icon = 'Analytics', buttonStyle = { vari
 const getStyle = ({
   variant = "primary",
   size = "medium",
+  full = false 
 }: ButtonStyleProps) => {
   const backgroundColor = variants[variant].background || variants.primary.background;
   const textColor = variants[variant].text || variants.primary.text;
@@ -62,7 +63,8 @@ const getStyle = ({
       backgroundColor,
       borderColor: strokeColor,
       borderWidth: 1,
-      alignSelf: "flex-start",
+      alignSelf: full ? "stretch" : "flex-start", // Conditional full width
+      width: full ? '100%' : undefined, // Set width to 100% if full is true
     },
     text: { ...textSize, color: textColor },
   });

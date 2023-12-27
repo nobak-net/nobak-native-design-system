@@ -7,8 +7,10 @@ const Form = ({ fields, onSubmit }: any) => {
     return (
         <FormProvider onSubmit={onSubmit}>
             <View>
-                {fields.map(({ field }, index) => (
-                    <Input key={index} field={field} />
+                {fields.map(({ field }: any, index: number) => (
+                    <View style={{ paddingTop: 8 }} key={index}>
+                        <Input field={field} />
+                    </View>
                 ))}
             </View>
         </FormProvider>

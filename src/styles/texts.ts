@@ -239,4 +239,4 @@ const texts: TextInterface = {
 
 
 
-export default texts;
+export { texts };
