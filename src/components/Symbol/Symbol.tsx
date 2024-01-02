@@ -1,7 +1,8 @@
 import React from 'react';
 import Svg, { Path, Rect, Mask } from 'react-native-svg';
 
-const Symbol = ({ type, color = '#000000' }: { type: 'World' | 'Star' | 'Chip', color: string }) => {
+export type SymbolType = 'World' | 'Star' | 'Chip'
+const Symbol = ({ type, color = '#000000' }: { type: SymbolType, color: string }) => {
     switch (type) {
         case 'Star':
             return (

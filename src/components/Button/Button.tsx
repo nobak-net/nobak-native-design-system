@@ -5,6 +5,7 @@ import { Icon, type IconKeys } from '../Icon'; // Import the Icon component
 
 interface ButtonProps {
   onPress: () => void;
+  beforePress?: () => void;
   text?: string;
   isLoading?: boolean;
   buttonStyle: ButtonStyleProps;
@@ -18,9 +19,16 @@ interface ButtonStyleProps {
   full?: boolean
 }
 
-export const Button = ({ onPress, text, icon = 'Analytics', buttonStyle = { variant: 'primary', size: 'medium' }, type = 'text' }: ButtonProps) => {
+export const Button = ({ onPress, beforePress, text, icon = 'Analytics', buttonStyle = { variant: 'primary', size: 'medium' }, type = 'text' }: ButtonProps) => {
   const style = getStyle(buttonStyle);
 
+  const handlePress = () => {
+    if (!!beforePress) {
+      beforePress()
+    }
+    onPress()
+  }
+  
   const renderContent = () => {
     switch (type) {
       case 'iconText':
@@ -39,7 +47,7 @@ export const Button = ({ onPress, text, icon = 'Analytics', buttonStyle = { vari
   };
 
   return (
-    <TouchableOpacity style={style.container} onPress={onPress}>
+    <TouchableOpacity style={style.container} onPress={handlePress}>
       {renderContent()}
     </TouchableOpacity>
   );
