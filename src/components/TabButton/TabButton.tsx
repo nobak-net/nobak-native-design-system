@@ -9,9 +9,10 @@ interface TabButtonProps {
   beforePress?: () => void;
   text?: string;
   symbol?: SymbolType;
+  isActive: boolean;
 }
 
-const TabButton = ({ onPress, beforePress, text, symbol = 'World' }: TabButtonProps) => {
+const TabButton = ({ onPress, beforePress, text, symbol = 'World', isActive }: TabButtonProps) => {
 
   const handlePress = () => {
     if (!!beforePress) {
@@ -22,6 +23,7 @@ const TabButton = ({ onPress, beforePress, text, symbol = 'World' }: TabButtonPr
 
   return (
     <TouchableOpacity style={styles.button} onPress={handlePress}>
+      <Symbol  type={symbol} color={styles.button.color} />
       <Text style={styles.label}>{text}</Text>
     </TouchableOpacity>
   );
@@ -32,10 +34,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // Add additional styling as needed
+    color: colors.primary[100]
   },
   label: {
-    // Styling for the label text
+    color: colors.primary[100]
   },
 });
 

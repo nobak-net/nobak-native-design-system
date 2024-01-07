@@ -9,8 +9,9 @@ interface ButtonProps {
   text?: string;
   isLoading?: boolean;
   buttonStyle: ButtonStyleProps;
+  description?: string;
   icon?: IconKeys;
-  type?: 'text' | 'iconText' | 'icon';
+  type?: 'text' | 'iconText' | 'icon' | 'caption';
 }
 
 interface ButtonStyleProps {
@@ -19,7 +20,7 @@ interface ButtonStyleProps {
   full?: boolean
 }
 
-export const Button = ({ onPress, beforePress, text, icon = 'Analytics', buttonStyle = { variant: 'primary', size: 'medium' }, type = 'text' }: ButtonProps) => {
+export const Button = ({ onPress, beforePress, text = '', description = '', icon = 'Analytics', buttonStyle = { variant: 'primary', size: 'medium' }, type = 'text' }: ButtonProps) => {
   const style = getStyle(buttonStyle);
 
   const handlePress = () => {
@@ -28,7 +29,7 @@ export const Button = ({ onPress, beforePress, text, icon = 'Analytics', buttonS
     }
     onPress()
   }
-  
+
   const renderContent = () => {
     switch (type) {
       case 'iconText':
@@ -41,6 +42,14 @@ export const Button = ({ onPress, beforePress, text, icon = 'Analytics', buttonS
       case 'icon':
         return icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />;
       case 'text':
+      case 'caption':
+        return (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />}
+            {text && <Text style={style.text}>{text}</Text>}
+            {text && <Text style={style.text}>{description}</Text>}
+          </View>
+        );
       default:
         return text && <Text style={style.text}>{text}</Text>;
     }
@@ -57,7 +66,7 @@ export const Button = ({ onPress, beforePress, text, icon = 'Analytics', buttonS
 const getStyle = ({
   variant = "primary",
   size = "medium",
-  full = false 
+  full = false
 }: ButtonStyleProps) => {
   const backgroundColor = variants[variant].background || variants.primary.background;
   const textColor = variants[variant].text || variants.primary.text;
