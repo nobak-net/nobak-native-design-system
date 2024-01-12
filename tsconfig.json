@@ -1,7 +1,24 @@
 {
   "compilerOptions": {
+    "outDir": "lib",
+    "target": "ES2021",
+    "lib": ["ES2021", "dom"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
-    "jsx": "react",
-
-  }
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "~/src/*": ["./src/*"],
+    }
+  },
+  "include": ["src/**/*", "src/shared/stories/**/*", "styles/index.css" ],
+  "exclude": ["node_modules", "lib", "./styles/main.css"]
 }

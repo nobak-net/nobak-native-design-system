@@ -1,35 +1,75 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import texts from "../../base/texts";
-import colors from "../../base/colors";
+import { TouchableOpacity, Text, StyleSheet, View, Dimensions } from "react-native";
+import { texts, colors } from "../../styles";
+import { Icon, type IconKeys } from '../Icon'; // Import the Icon component
 
 interface ButtonProps {
   onPress: () => void;
-  text: string;
-  isLoadig: boolean;
-  buttonStyle: ButtonStyleProps
+  beforePress?: () => void;
+  text?: string;
+  isLoading?: boolean;
+  buttonStyle: ButtonStyleProps;
+  description?: string;
+  icon?: IconKeys;
+  type?: 'text' | 'iconText' | 'icon' | 'caption';
 }
 
 interface ButtonStyleProps {
-  variant?: "primary" | "secondary";
-  size?: "tiny" | "small" | "medium" | "large";
+  variant: "primary" | "secondary";
+  size: "tiny" | "small" | "medium" | "large";
+  full?: boolean
 }
 
-// Function
-export const Button = ({ onPress, text, buttonStyle }: ButtonProps) => {
+export const Button = ({ onPress, beforePress, text = '', description = '', icon = 'Analytics', buttonStyle = { variant: 'primary', size: 'medium' }, type = 'text' }: ButtonProps) => {
   const style = getStyle(buttonStyle);
+
+  const handlePress = () => {
+    if (!!beforePress) {
+      beforePress()
+    }
+    onPress()
+  }
+
+  const renderContent = () => {
+    switch (type) {
+      case 'iconText':
+        return (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />}
+            {text && <Text style={style.text}>{text}</Text>}
+          </View>
+        );
+      case 'icon':
+        return icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />;
+      case 'caption':
+        return (
+          <View style={{ width: '100%' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ marginRight: 10 }}>{icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />}</View>
+              {text && <Text style={style.text}>{text}</Text>}
+            </View>
+            <View>{text && <Text style={{ ...texts.CaptionMedium, color: variants[buttonStyle.variant].text }}>{description}</Text>}</View>
+          </View>
+        );
+      case 'text':
+        return text && <Text style={style.text}>{text}</Text>;
+      default:
+        return text && <Text style={style.text}>{text}</Text>;
+    }
+  };
+
   return (
-    <TouchableOpacity style={style.container} onPress={onPress}>
-      <Text style={style.text}>{text}</Text>
+    <TouchableOpacity style={style.container} onPress={handlePress}>
+      {renderContent()}
     </TouchableOpacity>
   );
 };
-
 
 // Build Button Style
 const getStyle = ({
   variant = "primary",
   size = "medium",
+  full = false
 }: ButtonStyleProps) => {
   const backgroundColor = variants[variant].background || variants.primary.background;
   const textColor = variants[variant].text || variants.primary.text;
@@ -43,7 +83,8 @@ const getStyle = ({
       backgroundColor,
       borderColor: strokeColor,
       borderWidth: 1,
-      alignSelf: "flex-start",
+      alignSelf: full ? "stretch" : "flex-start", // Conditional full width
+      width: full ? '100%' : undefined, // Set width to 100% if full is true
     },
     text: { ...textSize, color: textColor },
   });
