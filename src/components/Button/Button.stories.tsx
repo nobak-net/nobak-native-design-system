@@ -37,3 +37,17 @@ variants.forEach(variant => {
   });
 });
 
+
+// Template for creating stories
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+
+// Example Story: Default Header
+export const CaptionButton = Template.bind({});
+CaptionButton.args = {
+    // Add props that your Header component expects
+    text: 'My Header',
+    description: 'My Header',
+    // ... other props
+};
+
+

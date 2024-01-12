@@ -1,2 +1,2 @@
-export { Header, Form, Logo, Input, Icon, Button, Symbol, TabButton } from './components';
+export { Header, Form, Logo, Input, Icon, Button, Symbol, TabButton, Layout } from './components';
 export { colors, texts } from './styles';

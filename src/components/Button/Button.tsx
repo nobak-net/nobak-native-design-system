@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, View, Dimensions } from "react-native";
 import { texts, colors } from "../../styles";
 import { Icon, type IconKeys } from '../Icon'; // Import the Icon component
 
@@ -41,15 +41,18 @@ export const Button = ({ onPress, beforePress, text = '', description = '', icon
         );
       case 'icon':
         return icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />;
-      case 'text':
       case 'caption':
         return (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />}
-            {text && <Text style={style.text}>{text}</Text>}
-            {text && <Text style={style.text}>{description}</Text>}
+          <View style={{ width: '100%' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ marginRight: 10 }}>{icon && <Icon name={icon} size={buttonStyle.size} color={variants[buttonStyle.variant].text} />}</View>
+              {text && <Text style={style.text}>{text}</Text>}
+            </View>
+            <View>{text && <Text style={{ ...texts.CaptionMedium, color: variants[buttonStyle.variant].text }}>{description}</Text>}</View>
           </View>
         );
+      case 'text':
+        return text && <Text style={style.text}>{text}</Text>;
       default:
         return text && <Text style={style.text}>{text}</Text>;
     }
