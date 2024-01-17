@@ -35,7 +35,6 @@ const TextInput = ({ config }: any) => {
     // Proceed with validation if the validation function is defined
     if (validation?.fn) {
       const e = await validation.fn(text);
-
       if (e.valid === true) {
         setStatus('VALID');
         // Call afterChange if it's defined
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
   },
   input: {
     ...texts.P3Medium,
-    width: halfWindowsWidth,
+    width: "100%",
     borderRadius: 4,
     borderWidth: 1,
     color: colors.primary[1600],

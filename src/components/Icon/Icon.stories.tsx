@@ -1,7 +1,9 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react-native';
-import { Icon, IconKeys } from './Icon';
+import { Icon, icons } from './Icon';
 import { View, Text } from 'react-native';
+
+const iconNames = Object.keys(icons);
 
 const IconMeta: ComponentMeta<typeof Icon> = {
   title: 'Icon',
@@ -17,7 +19,7 @@ const IconMeta: ComponentMeta<typeof Icon> = {
     name: {
       control: {
         type: 'select',
-        options: ['Analytics'], // List all your icon names here
+        options: iconNames, // List all your icon names here
       },
     },
   },
