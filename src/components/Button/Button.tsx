@@ -8,7 +8,7 @@ interface ButtonProps {
   beforePress?: () => void;
   text?: string;
   isLoading?: boolean;
-  buttonStyle: ButtonStyleProps;
+  buttonStyle?: ButtonStyleProps;
   description?: string;
   icon?: IconKeys;
   type?: 'text' | 'iconText' | 'icon' | 'caption';
