@@ -9,10 +9,10 @@ interface TabButtonProps {
   beforePress?: () => void;
   text?: string;
   symbol?: SymbolType;
-  isActive: boolean;
+  active: boolean;
 }
 
-const TabButton = ({ onPress, beforePress, text, symbol = 'World', isActive }: TabButtonProps) => {
+const TabButton = ({ onPress, beforePress, text, symbol = 'World', active }: TabButtonProps) => {
 
   const handlePress = () => {
     if (!!beforePress) {
@@ -22,23 +22,18 @@ const TabButton = ({ onPress, beforePress, text, symbol = 'World', isActive }: T
   }
 
   return (
-    <TouchableOpacity style={styles.button} onPress={handlePress}>
-      <Symbol  type={symbol} color={styles.button.color} />
-      <Text style={styles.label}>{text}</Text>
+    <TouchableOpacity style={[{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderBottomLeftRadius: active ? 8 : 0,
+      borderBottomRightRadius: active ? 8 : 0,
+    }, { backgroundColor: active ? colors.primary[2400] : colors.primary[100] }]} onPress={handlePress}>
+      <Symbol type={symbol} color={active ? colors.primary[100] : colors.primary[2400]} />
+      <Text style={{ color: active ? colors.primary[100] : colors.primary[2400] }}>{text}</Text>
     </TouchableOpacity>
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: colors.primary[100]
-  },
-  label: {
-    color: colors.primary[100]
-  },
-});
 
 export { TabButton };
