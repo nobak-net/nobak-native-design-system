@@ -29,9 +29,9 @@ const AccountActions = ({ balance = '0.00', deposit, withdraw, swap }: { balance
                 alignItems: 'center',
                 paddingTop: 12
             }}>
-                <Button type="iconText" icon="Add" text="Deposit" onPress={() => deposit()} buttonStyle={{ variant: 'secondary', size: 'small' }} />
-                <Button type="iconText" icon="Withdraw" text="Withdraw" onPress={() => withdraw()} buttonStyle={{ variant: 'secondary', size: 'small' }} />
-                <Button type="iconText" icon="Trade" text="Swap" onPress={() => swap()} buttonStyle={{ variant: 'secondary', size: 'small' }} />
+                {/* <Button type="iconText" icon="Add" text="Deposit" onPress={() => deposit()} buttonStyle={{ variant: 'secondary', size: 'small' }} /> */}
+                {/* <Button type="iconText" icon="Withdraw" text="Withdraw" onPress={() => withdraw()} buttonStyle={{ variant: 'secondary', size: 'small' }} /> */}
+                {/* <Button type="iconText" icon="Trade" text="Swap" onPress={() => swap()} buttonStyle={{ variant: 'secondary', size: 'small' }} /> */}
             </View>
         </View>
     );
