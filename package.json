@@ -1,15 +1,14 @@
 {
   "name": "nobak-native-design-system",
-  "version": "0.0.1-7332377f6fb7",
+  "version": "0.0.1-811eb7ae2bf2",
   "main": "lib/index",
   "license": "MIT",
   "scripts": {
     "dev": "start-storybook -p 6006",
     "build": "babel src --out-dir lib --extensions '.ts,.tsx'",
-    "reversion": "node ./scripts/reversion.js",
-    "start-verdaccio": "verdaccio",
-    "publish-package": "npm publish --registry http://localhost:4873",
-    "watch-publish": "chokidar 'src/**/*' -c 'npm run reversion && npm run publish-package'",
+    "pull-request": "node ./scripts/pull-request.cjs",
+    "publish-local": "node ./scripts/publish-local.cjs",
+    "watch-publish": "chokidar 'src/**/*' -c 'run publish-local'",
     "start": "npm-run-all --parallel start-verdaccio watch-publish",
     "build-storybook": "build-storybook",
     "storybook-generate": "sb-rn-get-stories --config-path .ondevice",
@@ -62,9 +61,6 @@
     "react": "*",
     "react-native": "*"
   },
-  "publishConfig": {
-    "registry": "http://localhost:4873/"
-  },
   "resolutions": {
     "react-docgen-typescript": "2.2.2",
     "@storybook/react-docgen-typescript-plugin": "1.0.6--canary.9.cd77847.0"
@@ -82,6 +78,7 @@
   "private": false,
   "dependencies": {
     "@react-native-picker/picker": "^2.6.1",
+    "react-native-qr-svg": "^1.0.1",
     "react-native-svg": "^14.1.0"
   }
 }
