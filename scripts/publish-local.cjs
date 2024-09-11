@@ -23,7 +23,7 @@ packageJson.version = newVersion;
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 console.log(`Version updated to ${newVersion}`);
 
-exec("npm publish --registry http://localhost:4873", (error, stdout, stderr) => {
+exec("npm run build && npm publish --registry http://localhost:4873", (error, stdout, stderr) => {
   if (error) {
     console.error(`Error executing publish to Verdaccio: ${error}`);
     return;
