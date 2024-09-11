@@ -30,8 +30,20 @@ export default IconMeta;
 const Template: ComponentStory<typeof Icon> = (args) => <Icon {...args} />;
 
 export const AnalyticsIcon = Template.bind({});
+
 AnalyticsIcon.args = {
   name: 'Analytics',
   size: 'medium',
   color: '#000', // Replace with your default color
+};
+
+export const AllIcons = () => {
+  return (
+    <View>
+      {iconNames.map((name: any) => {
+        return <View><Text>{name}</Text><Icon name={name} /></View>
+      })
+      }
+    </View>
+  )
 };
