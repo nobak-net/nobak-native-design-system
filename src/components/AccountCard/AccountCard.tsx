@@ -14,23 +14,24 @@ import { colors, texts } from '../../styles';
 
 
 interface AccountCardProps {
-  key: string;
+  index: number;
   publicKey: string;
   balance: string;
   canSign: boolean;
   isBackedUp: boolean;
 }
 
-const AccountCard: React.FC<AccountCardProps> = ({ key, publicKey, balance, canSign, isBackedUp }) => {
+const AccountCard: React.FC<AccountCardProps> = ({ index, publicKey, balance, canSign, isBackedUp }) => {
   return (
-    <View key={key} style={{ borderColor: colors.primary[1600], borderWidth: 1, borderRadius: 12, padding: 16, marginVertical: 8 }}>
+    <View key={index} style={{ borderColor: colors.primary[1600], borderWidth: 1, borderRadius: 12, padding: 16, marginVertical: 8 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
         <Text style={{ color: colors.primary[100], ...texts.P1Light }}>
           {publicKey.length > 20 ? `${publicKey.slice(0, 20)}...` : publicKey}
         </Text>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
-          <Icon name="Bank" color={canSign ? colors.primary[100] : colors.primary[1600]} />
-          <Icon name="Analytics" color={isBackedUp ? colors.primary[100] : colors.primary[1600]} />
+          <Icon name="Key" color={canSign ? colors.primary[100] : colors.primary[1600]} />
+          <Icon name="CloudSync" color={isBackedUp ? colors.primary[100] : colors.primary[1600]} />
+          <Icon name="CloudKey" color={colors.primary[1600]} />
           <Button
             onPress={() => console.log('Backup/Restore')}
             buttonStyle={{ variant: 'secondary', size: 'small' }}
