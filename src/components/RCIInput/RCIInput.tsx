@@ -8,6 +8,9 @@ import {
     Keyboard,
     NativeSyntheticEvent,
     TextInputKeyPressEventData,
+    Text,
+    TouchableOpacity,
+    Alert,
 } from 'react-native';
 import { Button, Symbol } from '..'; // Ensure the path is correct
 import { colors } from '../../styles/colors';
@@ -18,91 +21,144 @@ interface RCIInputProps {
     maxLength?: number;
     onCodeComplete: (code: string) => void;
     onPaste?: (code: string) => void;
+    label?: string;
+    placeholder?: string;
+    value?: string;
+    onChangeText?: (text: string) => void;
+    handlePaste?: () => void;
 }
 
-const RCIInput: React.FC<RCIInputProps> = ({ maxLength = 6, onCodeComplete, onPaste }) => {
-    const [code, setCode] = useState<string[]>(new Array(maxLength).fill(''));
-    const inputRefs = useRef<TextInput[]>([]);
+const RCIInput: React.FC<RCIInputProps> = ({
+    maxLength = 6,
+    onCodeComplete,
+    onPaste,
+    label,
+    placeholder,
+    value,
+    handlePaste,
+    onChangeText,
+}) => {
+    
+    const [code, setCode] = useState<string[]>(Array(maxLength).fill(''));
+    const inputRefs = useRef<Array<TextInput | null>>([]);
 
     const handleInput = (text: string, index: number) => {
         const newCode = [...code];
+    
         if (text) {
-            newCode[index] = text;
+            // Only take the first character in case multiple characters are pasted
+            newCode[index] = text[0];
             setCode(newCode);
+            if (onChangeText) {
+                onChangeText(newCode.join(''));
+            }
             if (index < maxLength - 1) {
-                inputRefs.current[index + 1].focus();
+                inputRefs.current[index + 1]?.focus();
             }
         } else {
+            // User hits backspace
             if (index > 0) {
                 newCode[index] = '';
                 setCode(newCode);
-                inputRefs.current[index - 1].focus();
+                if (onChangeText) {
+                    onChangeText(newCode.join(''));
+                }
+                inputRefs.current[index - 1]?.focus();
             } else {
+                // If it's the first field, just erase
                 newCode[index] = '';
                 setCode(newCode);
+                if (onChangeText) {
+                    onChangeText(newCode.join(''));
+                }
+            }
+        }
+    };
+    
+    const handleKeyPress = ({ nativeEvent: { key } }: NativeSyntheticEvent<TextInputKeyPressEventData>, index: number) => {
+        if (key === 'Backspace' && code[index] === '') {
+            if (index > 0) {
+                inputRefs.current[index - 1]?.focus();
             }
         }
     };
 
-    const handleKeyPress = (
-        { nativeEvent: { key } }: NativeSyntheticEvent<TextInputKeyPressEventData>,
-        index: number
-    ) => {
-        if (key === 'Backspace' && index > 0 && code[index] === '') {
-            inputRefs.current[index - 1].focus();
-        }
-    };
-
-    useEffect(() => {
-        const candidateCode = code.join('');
-        if (candidateCode.length === maxLength) {
-            onCodeComplete(candidateCode);
-        }
-    }, [code, maxLength, onCodeComplete]);
-
     // const handlePaste = async () => {
-    //     if (onPaste) {
-    //         try {
-    //             const clipboardContent = await Clipboard.getStringAsync();
-    //             if (clipboardContent && clipboardContent.length === maxLength) {
-    //                 const newCode = clipboardContent.split('');
-    //                 setCode(newCode);
-    //                 inputRefs.current[maxLength - 1].focus();
-    //                 onPaste(clipboardContent);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error accessing clipboard:', error);
+    //     const clipboardContent = await Clipboard.getStringAsync();
+    //     const pastedCode = clipboardContent.trim().slice(0, maxLength);
+    //     if (/^\d+$/.test(pastedCode)) { // Assuming the code is numeric
+    //         const newCode = pastedCode.split('');
+    //         while (newCode.length < maxLength) {
+    //             newCode.push('');
     //         }
+    //         setCode(newCode);
+    //         if (onPaste) {
+    //             onPaste(pastedCode);
+    //         }
+    //         if (onChangeText) {
+    //             onChangeText(pastedCode);
+    //         }
+    //         // Optionally, you can trigger onCodeComplete if the pasted code is complete
+    //         if (pastedCode.length === maxLength) {
+    //             onCodeComplete(pastedCode);
+    //         }
+    //     } else {
+    //         Alert.alert('Invalid Code', 'The pasted content is not a valid code.');
     //     }
     // };
 
+    useEffect(() => {
+        const candidateCode = code.join('');
+        if (candidateCode.length === maxLength && !code.includes('')) {
+            onCodeComplete(candidateCode);
+        }
+    }, [code]);
+
     return (
-        <View style={styles.container}> {/* Change 'styles' to 'style' */}
-            {code.map((digit, index) => (
+        <View style={styles.container}>
+            {label && <Text style={styles.label}>{label}</Text>}
+            <View style={styles.inputContainer}>
                 <TextInput
-                    key={index}
-                    style={styles.input}
-                    keyboardType="number-pad"
-                    maxLength={1}
-                    value={digit}
-                    onKeyPress={(e) => handleKeyPress(e, index)}
-                    onChangeText={(text) => handleInput(text, index)}
-                    ref={(ref) => {
-                        if (ref) {
-                            inputRefs.current[index] = ref;
-                        }
-                    }}
+                    style={styles.hiddenInput}
+                    onChangeText={handlePaste}
+                    onFocus={handlePaste} // Trigger paste when hidden input is focused
+                    maxLength={maxLength}
+                    autoFocus
                 />
-            ))}
+                {code.map((digit, index) => (
+                    <TextInput
+                        key={index}
+                        style={styles.input}
+                        keyboardType="number-pad"
+                        maxLength={1}
+                        value={digit}
+                        onKeyPress={(e) => handleKeyPress(e, index)}
+                        onChangeText={(text) => handleInput(text, index)}
+                        ref={(ref) => inputRefs.current[index] = ref}
+                        returnKeyType="done"
+                        blurOnSubmit={false}
+                    />
+                ))}
+            </View>
+            <TouchableOpacity onPress={handlePaste} style={styles.pasteButton}>
+                <Text style={styles.pasteText}>Paste Code</Text>
+            </TouchableOpacity>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        marginVertical: 10,
+    },
+    label: {
+        marginBottom: 5,
+        color: colors.primary[600],
+        ...texts.H4Bold,
+    },
+    inputContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        padding: 20,
+        justifyContent: 'space-between',
     },
     input: {
         width: 40,
@@ -113,11 +169,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: 5,
         fontSize: 18,
+        color: colors.primary[300],
     },
     hiddenInput: {
         height: 0,
         width: 0,
         opacity: 0,
+    },
+    pasteButton: {
+        marginTop: 10,
+        alignSelf: 'center',
+    },
+    pasteText: {
+        color: colors.primary[800],
+        textDecorationLine: 'underline',
     },
 });
 

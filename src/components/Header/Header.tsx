@@ -15,7 +15,7 @@ const Header = ({ action }: { action: () => void }) => {
                 alignItems: 'center',
                 padding: 12
             }}>
-                <Logo type="Isologo" />
+                <Logo type="Isologo" theme="ligth" />
                 <TouchableOpacity onPress={() => action()} style={{
                     justifyContent: 'center',
                     alignItems: 'center',

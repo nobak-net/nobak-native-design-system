@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     // Define your label styles
     paddingLeft: 4,
     ...texts.P3Bold,
-    color: colors.primary[1400],
+    color: colors.primary[600],
   },
   inputContainer: {
     marginTop: 8,
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 4,
     borderWidth: 1,
-    color: colors.primary[1600],
-    borderColor: colors.primary[1000],
+    color: colors.primary[300],
+    borderColor: colors.primary[800],
     paddingLeft: 12,
     paddingBottom: 8,
     paddingTop: 8,
