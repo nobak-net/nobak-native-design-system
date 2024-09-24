@@ -1,53 +1,119 @@
+// Button.stories.tsx
+
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react-native";
 import { Button } from "./Button";
-import { View } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+
+// Import LinearGradient from expo-linear-gradient only for actual app usage
+// Do not import it here to prevent Storybook build issues
+// Instead, we'll mock or skip gradient wrappers in Storybook
 
 const ButtonMeta: ComponentMeta<typeof Button> = {
   title: "Button",
   component: Button,
   args: {
-    text: "Hello",
+    text: "Button",
   },
-  decorators: [
-    (Story) => (
-      <View style={{ padding: 16 }}>
-        <Story />
-      </View>
-    ),
-  ],
 };
 
 export default ButtonMeta;
 
-type ButtonStory = ComponentStory<typeof Button>;
+const variants = ["primary", "secondary"];
+const sizes = ["tiny", "small", "medium", "large"];
+const types = ["text", "iconText", "icon", "caption"];
 
-const variants = ['primary', 'secondary'];
-const sizes = ['tiny', 'small', 'medium', 'large'];
+// Helper function to get a mock wrapper for Storybook
+// const getMockWrapper = (theme: "light" | "dark", borderRadius: number) => {
+//   // Return a simple View with gradient-like styling
+//   // Since we cannot use expo-linear-gradient in Storybook, we'll simulate it
+//   const gradientColors = theme === "light"
+//     ? ["#FFFFFF", "#CCCCCC", "#888888"] // Example light theme gradient colors
+//     : ["#444444", "#666666", "#888888"]; // Example dark theme gradient colors
 
-// Function to create a story for a specific variant and size
-const createButtonStory = (variant: string, size: string): ButtonStory => {
-  return (args) => <Button {...args} buttonStyle={{ variant, size }} />;
-};
+//   return (
+//     <View
+//       style={[
+//         styles.gradientWrapper,
+//         {
+//           borderRadius,
+//           backgroundColor: theme === "light" ? "#CCCCCC" : "#666666", // Simulated gradient color
+//         },
+//       ]}
+//     />
+//   );
+// };
 
-// Create stories for each variant and size
-variants.forEach(variant => {
-  sizes.forEach(size => {
-    module.exports[`${variant}_${size}`] = createButtonStory(variant, size);
+// Template to display all combinations
+const AllButtonsTemplate: ComponentStory<typeof Button> = (args, { globals }) => {
+  const theme = globals?.backgrounds?.value === "#F5F4F7" ? 'light' : 'dark';
+
+
+  const combinations: {
+    variant: "primary" | "secondary" | "gradientBorder";
+    size: "tiny" | "small" | "medium" | "large";
+    type: "text" | "iconText" | "icon" | "caption";
+  }[] = [];
+
+  variants.forEach((variant) => {
+    sizes.forEach((size) => {
+      types.forEach((type) => {
+        combinations.push({ variant, size, type });
+      });
+    });
   });
-});
 
-
-// Template for creating stories
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
-
-// Example Story: Default Header
-export const CaptionButton = Template.bind({});
-CaptionButton.args = {
-    // Add props that your Header component expects
-    text: 'My Header',
-    description: 'My Header',
-    // ... other props
+  return (
+    <ScrollView>
+      {combinations.map((combo, index) => (
+        <View key={index} style={styles.buttonContainer}>
+          <Text style={styles.label}>
+            Variant: {combo.variant}, Size: {combo.size}, Type: {combo.type}, Theme: {theme}
+          </Text>
+          <Button
+            {...args}
+            buttonStyle={{ variant: combo.variant, size: combo.size }}
+            type={combo.type}
+            text={
+              combo.type !== "icon" ? `${combo.variant} ${combo.size}` : undefined
+            }
+            description={
+              combo.type === "caption" ? "Sample description" : undefined
+            }
+            icon="Analytics"
+            onPress={() => {}}
+            theme={theme}
+            wrapper={
+              combo.variant === "gradientBorder"
+                ? getMockWrapper(theme, styles.gradientWrapper.borderRadius)
+                : undefined
+            }
+          />
+        </View>
+      ))}
+    </ScrollView>
+  );
 };
 
+export const AllButtons = AllButtonsTemplate.bind({});
+AllButtons.args = {
+  // Default args if any
+};
 
+const styles = StyleSheet.create({
+  buttonContainer: {
+    marginBottom: 24,
+    width: "100%",
+  },
+  label: {
+    marginBottom: 8,
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  gradientWrapper: {
+    // Simulated gradient border
+    borderRadius: 10, // Adjust based on button size
+    padding: 1, // Controls the thickness of the gradient border
+    // Background color is set dynamically in getMockWrapper
+  },
+});

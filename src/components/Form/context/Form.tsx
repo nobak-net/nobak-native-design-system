@@ -18,9 +18,10 @@ export const useForm = (): FormContextType => {
 };
 
 export const FormProvider: React.FC<{
+    theme: 'light' | 'dark'
     children: React.ReactNode;
     onSubmit: (formState: { [key: string]: any }) => void;
-}> = ({ children, onSubmit }) => {
+}> = ({ children, onSubmit, theme }) => {
     const [formState, setFormState] = useState<{ [key: string]: any }>({});
 
     const setFieldValue = useCallback((field: string, value: any) => {
@@ -39,7 +40,7 @@ export const FormProvider: React.FC<{
             <View>
                 {children}
                 <View style={{ paddingTop: 12}}>
-                    <Button text="Submit" onPress={handleSubmit} buttonStyle={{ variant: 'primary', size: 'medium', full: false }} />
+                    <Button theme={theme} text="Submit" onPress={handleSubmit} buttonStyle={{ variant: 'primary', size: 'medium', full: false }} />
                 </View>
             </View>
         </FormContext.Provider>

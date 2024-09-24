@@ -15,22 +15,23 @@ interface AccountCardProps {
 
 const AccountCard: React.FC<AccountCardProps> = ({ name, publicKey, balance, canSign, isBackedUp, viewAccount }) => {
   return (
-    <View style={{ borderColor: colors.primary[1600], borderWidth: 1, borderRadius: 12, padding: 16, marginVertical: 8 }}>
+    <View style={{ borderColor: colors.primary[1000], borderWidth: 1, borderRadius: 12, padding: 16, marginVertical: 8 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
-        <Text style={{ color: colors.primary[100], ...texts.P1Light }}>{name}</Text>
+        <Text style={{ color: colors.primary[100], ...texts.P1Bold }}>{name}</Text>
         <Button
           onPress={viewAccount}
-          buttonStyle={{ variant: 'secondary', size: 'small' }}
+          buttonStyle={{ variant: 'primary', size: 'small' }}
           type="icon"
           icon="Info"
+          theme="dark"
         />
       </View>
       <View>
-        <Text style={{ color: colors.primary[100], ...texts.P1Light }}>
+        <Text style={{ color: colors.primary[100], ...texts.P3Light }}>
           {publicKey.length > 20 ? `${publicKey.slice(0, 20)}...` : publicKey}
         </Text>
       </View>
-      <Text style={{ color: colors.primary[100], ...texts.P1Light }}>
+      <Text style={{ color: colors.primary[100], ...texts.P3Bold }}>
         {balance} XLM
       </Text>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
