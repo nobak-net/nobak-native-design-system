@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react-native';
 import { Icon, icons } from './Icon';
 import { View, Text } from 'react-native';
+import { colors } from '~/src/styles';
 
 const iconNames = Object.keys(icons);
 
@@ -34,14 +35,14 @@ export const AnalyticsIcon = Template.bind({});
 AnalyticsIcon.args = {
   name: 'Analytics',
   size: 'medium',
-  color: '#000', // Replace with your default color
+  color: colors.primary[2400], // Replace with your default color
 };
 
 export const AllIcons = () => {
   return (
     <View>
       {iconNames.map((name: any) => {
-        return <View><Text>{name}</Text><Icon name={name} /></View>
+        return <View><Text>{name}</Text><Icon name={name} color={colors.primary[100]}/></View>
       })
       }
     </View>

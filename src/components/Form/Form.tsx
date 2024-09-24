@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { FormProvider } from './context/Form';
 import { Input } from './Input'; // This is the new Input component
 
-const Form = ({ fields, onSubmit }: any) => {
+const Form = ({ fields, onSubmit, theme = 'light' }: any) => {
     return (
-        <FormProvider onSubmit={onSubmit}>
+        <FormProvider onSubmit={onSubmit} theme={theme}>
             <View>
                 {fields.map(({ field }: any, index: number) => (
                     <View style={{ paddingTop: 8 }} key={index}>

@@ -1,18 +1,19 @@
 import React from 'react';
 import Svg, { Path, Rect } from 'react-native-svg';
 import { colors } from '../../styles/colors';
-const Logo = ({ type, theme = 'ligth' }: { type: 'LogoFull' | 'Isologo' | 'Logo',  theme: 'ligth' | 'dark'}) => {
+const Logo = ({ type, theme = 'light' }: { type: 'LogoFull' | 'Isologo' | 'Logo', theme: 'light' | 'dark' }) => {
     switch (type) {
         case 'LogoFull':
             return (
                 <Svg width="287" height="52" viewBox="0 0 287 52" fill="none">
+                    <Rect width="50" height="50.1634" transform="translate(1 1)" fill={theme === 'dark' ? colors.primary[2000] : colors.primary[100]} />
                     <Path d="M28.4238 1C28.4238 16.1468 16.1468 28.4238 1 28.4238V1H28.4238Z" fill={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} />
                     <Path d="M51 1.1385H1.13851V51H51V1.1385Z" stroke={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />
                     <Path d="M1.06093 1.03046L6.48478 51" stroke={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />
                     <Path d="M1.06093 1.03046L12.0415 51" stroke={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />
                     <Path d="M1.06093 1.03046L17.867 51" stroke={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />
                     <Path d="M1.06093 1.03046L24.1357 51" stroke={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />
-                    <Path d="M1.06093 1.03046L31.0665 51" stroke={theme === 'da rk' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />
+                    <Path d="M1.06093 1.03046L31.0665 51" stroke={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />
                     <Path d="M1.06093 1.03046L39.0859 51.1634" stroke={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />
                     <Path d="M1.06093 1.03046L48.2798 51" stroke={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />
                     <Path d="M1.06093 1.03046L51 43.5706" stroke={theme === 'dark' ? colors.primary[100] : colors.primary[2000]} stroke-miterlimit="10" />

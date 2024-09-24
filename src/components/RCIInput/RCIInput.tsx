@@ -140,9 +140,6 @@ const RCIInput: React.FC<RCIInputProps> = ({
                     />
                 ))}
             </View>
-            <TouchableOpacity onPress={handlePaste} style={styles.pasteButton}>
-                <Text style={styles.pasteText}>Paste Code</Text>
-            </TouchableOpacity>
         </View>
     );
 };
@@ -158,7 +155,6 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
     },
     input: {
         width: 40,
@@ -167,8 +163,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         textAlign: 'center',
-        marginHorizontal: 5,
         fontSize: 18,
+        marginRight: 20,
+        borderColor: colors.primary[100],
         color: colors.primary[300],
     },
     hiddenInput: {
